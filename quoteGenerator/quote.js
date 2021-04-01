@@ -29,7 +29,7 @@ let menuList = [
     {
         id: 4,
         img : './img/44.png',
-        cat: 'breakfast',
+        cat: 'Lunch',
         item: 'Jam and Cheese',
         des: 'this is the breakfast',
         price: '$342'
@@ -74,16 +74,77 @@ let menuList = [
         des: 'this is the breakfast',
         price: '$11'
     },
+    {
+        id: 10,
+        img : './img/11.png',
+        cat: 'Dinner',
+        item: 'slices',
+        des: 'this is the breakfast',
+        price: '$11'
+    },
+    {
+        id: 11,
+        img : './img/11.png',
+        cat: 'Dinner',
+        item: 'slices',
+        des: 'this is the breakfast',
+        price: '$11'
+    },
+    {
+        id: 12,
+        img : './img/11.png',
+        cat: 'Eve',
+        item: 'Refeshments',
+        des: 'this is the breakfast',
+        price: '$11'
+    }
 ]
 
 let catPanel = document.querySelector('.cat-sec')
+let btnPanel = document.querySelector('.btnPanel')
+
 
 window.addEventListener('DOMContentLoaded', function(){
-    let catDisplay = menuList.map(function(item){
+    displayMenuItem(menuList)
+    const categories = menuList.reduce(function(values, item){
+        if(!values.includes(item.cat)){
+            values.push(item.cat)
+        }
+        return values
+    },['All'])
+    const catBtns = categories.map(function(category){
+        return `<button type="button" class="btn" data-id=${category}>${category}</button>`
+    }).join('')
+    btnPanel.innerHTML = catBtns
+    let catBtn = document.querySelectorAll('.btn')
+        
+    catBtn.forEach(function(btn){
+        btn.addEventListener('click', function(e){
+            const category = e.currentTarget.dataset.id
+            const menuCategory = menuList.filter(function(menuItem){
+                if(menuItem.cat === category){
+                    return menuItem
+                }            
+            })
+            if(category === 'All'){
+                displayMenuItem(menuList) 
+            }
+            else {
+                displayMenuItem(menuCategory)
+            }
+    
+        })
+    })
+    
+})
+
+function displayMenuItem(menuItem){
+    let catDisplay = menuItem.map(function(item){
         return `
         <div class="cat-panel">
             <img src = ${item.img} alt = ${item.cat}>
             <h2>${item.cat}</h2>
+            <p>${item.item}</p>
             <p>${item.des}</p>
             <p>Price: $ ${item.price}</p>
         </div> `
@@ -91,5 +152,7 @@ window.addEventListener('DOMContentLoaded', function(){
 
     catDisplay = catDisplay.join('')
     catPanel.innerHTML = catDisplay
-    console.log(catDisplay)
-})
+}
+
+
+
