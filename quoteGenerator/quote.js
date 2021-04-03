@@ -48,4 +48,22 @@ let shops = [
     },
 ]
 
+let shopListClass = document.querySelector('.shopListPanel')
 
+function displayShopList(shopList){
+    let displayShop = shopList.map(function(item){
+        return `<p>Brand Name: ${item.name} </p>
+        <p>shopCat: ${item.shopCat}</p>
+        <p>minPrice: ${item.minPrice}</p>
+        <p>maxPrice: ${item.maxPrice}</p>
+        <p>outlets: karachi: ${item.outlets.karachi}, islamabad: ${item.outlets.islamabad}, USA: ${item.outlets.USA}</p>`
+    })
+
+    displayShop = displayShop.join('')
+    shopListClass.innerHtml = displayShop
+    
+}
+
+window.addEventListener('DOMContentLoaded', function(){
+    displayShopList(shops);
+})
